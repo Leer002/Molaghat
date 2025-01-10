@@ -1,0 +1,71 @@
+{% load static %}
+{% load humanize %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{category}}</title>
+    <link rel="stylesheet" href="{% static 'css/styles.css' %}">
+</head>
+<body>
+    <nav class="navbar navbar-expand-lg navbar-dark fixed-top" id="mainNav">
+        <div class="container">
+            <a class="navbar-brand" href="/#page-top">صفحه‌ی اصلی</a>
+            <ul class="navbar-nav text-uppercase ms-auto py-4 py-lg-0">
+                <li class="nav-item"><a class="nav-link" href="/#services">خدمات</a></li>
+                <li class="nav-item"><a class="nav-link" href="/#category">دسته بندی</a></li>
+                <li class="nav-item"><a class="nav-link" href="/#about">درباره ما</a></li>
+                <li class="nav-item"><a class="nav-link" href="/#contact">ارتباط با ما</a></li>
+            </ul>
+        </div>
+    </nav>
+    <div class="portfolio-modal" id="portfolioModal1" tabindex="-1" role="dialog" aria-hidden="true">
+        <div class="modal-diplaalog">
+            <div class="modal-content">
+                <div class="container">
+                    <div class="row justify-content-center">
+                        <div class="col-lg-8">
+                            <div class="modal-body">
+                                <center><h2 class="text-uppercase">!ملاقات‌های نزدیک</h2><center/>
+                                <!-- Project details-->
+                                
+                                        <br>
+                                        <img class="img-fluid d-block mx-auto" src="{{ place.image.url }}" width="200px" alt="..." />
+                                        <b><span>{{ place.place_name }}</span></b>
+                                        <p>{{ place.event }}</p>
+                                        <ul class="list-inline">
+                                            <li>
+                                                <strong>قیمت:</strong>
+                                                {{ place.price|intcomma }} تومان   
+                                            </li>
+                                            <li>
+                                                <strong>تاریخ:</strong>
+                                                {{ place.get_event_date_shamsi }}
+                                            </li>
+                                            <li>
+                                                <strong>ساعت:</strong>
+                                                {{ place.event_time }}
+                                            </li>
+                                            <li>
+                                                <strong>آدرس:</strong>
+                                                {{ place.address }}
+                                            </li>
+                                            {% if file %}
+                                                <a href={{file.file.url}}>{{file.title}}</a>
+                                            {% endif %}
+                                        </ul>
+                                        <button class="btn btn-primary" data-bs-dismiss="modal" type="button">
+                                            رزرو
+                                        </button>
+                                        <br>
+                                        <hr>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div> 
+</body>
+</html>

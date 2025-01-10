@@ -1,0 +1,66 @@
+{% load static %}
+{% load humanize %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{category}}</title>
+    <link rel="stylesheet" href="{% static 'css/styles.css' %}">
+</head>
+<body>
+    <nav class="navbar navbar-expand-lg navbar-dark fixed-top" id="mainNav">
+        <div class="container">
+            <a class="navbar-brand" href="/#page-top">صفحه‌ی اصلی</a>
+            <ul class="navbar-nav text-uppercase ms-auto py-4 py-lg-0">
+                <li class="nav-item"><a class="nav-link" href="/#services">خدمات</a></li>
+                <li class="nav-item"><a class="nav-link" href="/#category">دسته بندی</a></li>
+                <li class="nav-item"><a class="nav-link" href="/#about">درباره ما</a></li>
+                <li class="nav-item"><a class="nav-link" href="/#contact">ارتباط با ما</a></li>
+                <li class="nav-item">
+                    <form action="{% url 'category' category.title %}" method="get">
+                        <select name="filter_price" onchange="this.form.submit()" class="price-select">
+                            <option value="min" {% if filter_price == "min" %}selected{% endif %}>ارزان ترین</option>
+                            <option value="max" {% if filter_price == "max" %}selected{% endif %}>گران ترین</option>
+                        </select>
+                        <button type="submit" style="display:none;">ارسال</button>
+                    </form>                    
+                </li>                
+            </ul>
+        </div>
+    </nav>
+    <div class="portfolio-modal" id="portfolioModal1" tabindex="-1" role="dialog" aria-hidden="true">
+        <div class="modal-diplaalog">
+            <div class="modal-content">
+                <div class="container">
+                    <div class="row justify-content-center">
+                        <div class="col-lg-8">
+                            <div class="modal-body">
+                                <center><h2 class="text-uppercase">!ملاقات‌های نزدیک</h2><center/>
+                                <!-- Project details-->
+                                {% for cafe in category_places %}
+                                        <br>
+                                        <img class="img-fluid d-block mx-auto" src="{{ cafe.image.url }}" width="200px" alt="..." />
+                                        <b><span>{{ cafe.place_name }}</span></b>
+                                        <div>{{ cafe.event }}</div>
+                                        <strong>تاریخ:</strong>
+                                        <span>{{ cafe.get_event_date_shamsi }}</span>
+                                        <br>
+                                        <a class="class="navbar navbar-expand-lg navbar-dark fixed-top"" href="{% url 'detail' cafe.pk %}">جزئیات</a>
+                                        <hr>
+                                {% empty %}
+                                <br>
+                                <hr>
+                                    <h3> .موردی برای نمایش فعلا وجود ندارد</h3>
+                                    <br>
+                                    <img class="img-fluid d-block mx-auto" src="{% static 'assets/img/portfolio/nichts.jpg' %}" width="300px" alt="..." />
+                                {% endfor %}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div> 
+</body>
+</html>
