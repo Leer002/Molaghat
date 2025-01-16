@@ -11381,3 +11381,10 @@ section#contact form#contactForm :-ms-input-placeholder {
   background-color: var(--bs-primary);
   color: #212529;
 }
+
+.icon-button {
+  background-color: transparent !important;
+  border: none !important;
+  font-size: 20px;
+}
+

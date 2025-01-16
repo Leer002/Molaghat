@@ -1,4 +1,3 @@
-import unicodedata
 
 from django.shortcuts import render, get_object_or_404, redirect
 from django.views import View
@@ -19,11 +18,18 @@ class PlaceListView(View):
 class PlaceDetailView(View):
     def get(self, request, pk):
         place = get_object_or_404(Place, pk=pk)
+        like = place.like
         try:
             file = File.objects.get(place=place)
         except File.DoesNotExist:
             file = None
-        return render(request, "places/detail.html", {"place":place, "file":file})
+
+        return render(request, "places/detail.html", {"place":place, "file":file, "like":like})
+    def post(self, request, pk):
+        place = get_object_or_404(Place, pk=pk)
+        place.like += 1
+        place.save()
+        return redirect("detail", pk=pk)
 
 
 class SearchView(View):
@@ -55,4 +61,3 @@ class CategoryView(View):
             "category_places": category_places,
             "filter_price": filter_price
         })
-

@@ -33,7 +33,8 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'django.contrib.humanize',
     # My apps
-    'places'
+    'places',
+    'users'
 ]
 
 MIDDLEWARE = [
@@ -117,3 +118,9 @@ MEDIA_ROOT = MEDIA_ROOT
 # https://docs.djangoproject.com/en/4.2/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+
+# Authorization
+AUTH_USER_MODEL = 'users.User'
+
+CACHES = CACHES

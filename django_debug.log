@@ -1,0 +1,19 @@
+DEBUG 2025-01-14 21:22:12,884 utils (0.000) 
+                SELECT VERSION(),
+                       @@sql_mode,
+                       @@default_storage_engine,
+                       @@sql_auto_is_null,
+                       @@lower_case_table_names,
+                       CONVERT_TZ('2001-01-01 01:00:00', 'UTC', 'UTC') IS NOT NULL
+            ; args=None; alias=default
+DEBUG 2025-01-14 21:22:12,886 utils (0.000) SET SESSION TRANSACTION ISOLATION LEVEL READ COMMITTED; args=None; alias=default
+DEBUG 2025-01-14 21:22:12,889 utils (0.000) 
+            SELECT
+                table_name,
+                table_type,
+                table_comment
+            FROM information_schema.tables
+            WHERE table_schema = DATABASE()
+            ; args=None; alias=default
+DEBUG 2025-01-14 21:22:12,897 utils (0.000) SELECT `django_migrations`.`id`, `django_migrations`.`app`, `django_migrations`.`name`, `django_migrations`.`applied` FROM `django_migrations`; args=(); alias=default
+DEBUG 2025-01-14 21:22:55,736 utils (0.000) SELECT `users`.`id`, `users`.`password`, `users`.`last_login`, `users`.`username`, `users`.`first_name`, `users`.`last_name`, `users`.`email`, `users`.`phone_number`, `users`.`is_staff`, `users`.`is_superuser`, `users`.`is_active`, `users`.`date_joined`, `users`.`last_seen` FROM `users` WHERE `users`.`username` = 'leer' LIMIT 21; args=('leer',); alias=default

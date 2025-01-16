@@ -34,6 +34,7 @@ class Place(models.Model):
     city = models.CharField(_("city"), max_length=80)
     price = models.IntegerField(_("price"))
     capacity = models.PositiveIntegerField(_("capacity"))
+    like = models.IntegerField(_("like"), default=0)
     event_date = models.DateField(_("event date"), max_length=50)
     event_time = models.CharField(_("event time"), max_length=5, blank=True, null=True)
     updated_time = models.DateTimeField(_("updated time"), auto_now=True)
@@ -51,7 +52,6 @@ class Place(models.Model):
             raise ValidationError('Value cannot be zero.')
     
     def get_event_date_shamsi(self):
-           """تاریخ ایونت را به شمسی تبدیل کند."""
            return jdatetime.date.fromgregorian(date=self.event_date)
         
 class File(models.Model):

@@ -7,6 +7,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>{{category}}</title>
     <link rel="stylesheet" href="{% static 'css/styles.css' %}">
+    <script src="https://kit.fontawesome.com/9b12e553ef.js" crossorigin="anonymous"></script> 
 </head>
 <body>
     <nav class="navbar navbar-expand-lg navbar-dark fixed-top" id="mainNav">
@@ -29,37 +30,47 @@
                             <div class="modal-body">
                                 <center><h2 class="text-uppercase">!ملاقات‌های نزدیک</h2><center/>
                                 <!-- Project details-->
-                                
-                                        <br>
-                                        <img class="img-fluid d-block mx-auto" src="{{ place.image.url }}" width="200px" alt="..." />
-                                        <b><span>{{ place.place_name }}</span></b>
-                                        <p>{{ place.event }}</p>
-                                        <ul class="list-inline">
-                                            <li>
-                                                <strong>قیمت:</strong>
-                                                {{ place.price|intcomma }} تومان   
-                                            </li>
-                                            <li>
-                                                <strong>تاریخ:</strong>
-                                                {{ place.get_event_date_shamsi }}
-                                            </li>
-                                            <li>
-                                                <strong>ساعت:</strong>
-                                                {{ place.event_time }}
-                                            </li>
-                                            <li>
-                                                <strong>آدرس:</strong>
-                                                {{ place.address }}
-                                            </li>
-                                            {% if file %}
-                                                <a href={{file.file.url}}>{{file.title}}</a>
-                                            {% endif %}
-                                        </ul>
-                                        <button class="btn btn-primary" data-bs-dismiss="modal" type="button">
-                                            رزرو
-                                        </button>
-                                        <br>
-                                        <hr>
+                                <br>
+                                <img class="img-fluid d-block mx-auto" src="{{ place.image.url }}" width="200px" alt="..." />
+                                <b><span>{{ place.place_name }}</span></b>
+                                <div dir="rtl"><b>{{ place.event }}</b></div>
+                                <br>
+                                <ul class="list-inline">
+                                    <li>
+                                        <strong>قیمت:</strong>
+                                        {{ place.price|intcomma }} تومان   
+                                    </li>
+                                    <li>
+                                        <strong>تاریخ:</strong>
+                                        {{ place.get_event_date_shamsi }}
+                                    </li>
+                                    <li>
+                                        <strong>ساعت:</strong>
+                                        {{ place.event_time }}
+                                    </li>
+                                    <li>
+                                        <strong>آدرس:</strong>
+                                        {{ place.address }}
+                                    </li>
+                                    {% if file %}
+                                        <a href={{file.file.url}}>{{file.title}}</a>
+                                    {% endif %}
+                                </ul>
+                                <button class="btn btn-primary" data-bs-dismiss="modal" type="button">
+                                    رزرو
+                                </button>
+                                <br><br>
+                                    <form action="{% url 'detail' place.pk %}" method="post">
+                                        {% csrf_token %}
+                                        <button class="icon-button"><i class="fa-regular fa-thumbs-up" class="like-icon" style="color: #FFD43B;font-size:24px;"></i>{{like}}</button>
+                                    </form>
+                                    <br>
+                                    <span>اشتراک گذاری</span>
+                                    <a href="https://www.facebook.com/sharer/sharer.php?u={{ request.build_absolute_uri }} " target="_blank"><i class="fa-brands fa-facebook"></i></a>
+                                    <a href="https://api.whatsapp.com/send?text={{ event.title }} - {{ request.build_absolute_uri }}" target="_blank"><i class="fa fa-whatsapp" aria-hidden="true"></i></a>
+                                    <a href="https://t.me/share/url?url={{ request.build_absolute_uri }}&text={{ event.title }}" target="_blank"><i class="fa fa-telegram" aria-hidden="true"></i></a><br>
+                                <br>
+                                <hr>
                             </div>
                         </div>
                     </div>
