@@ -56,9 +56,12 @@
                                         <a href={{file.file.url}}>{{file.title}}</a>
                                     {% endif %}
                                 </ul>
-                                <button class="btn btn-primary" data-bs-dismiss="modal" type="button">
-                                    رزرو
-                                </button>
+                                <form action="{% url 'cart-add' place.pk %}" method="post">
+                                    {% csrf_token %}
+                                    <button class="btn btn-primary" data-bs-dismiss="modal" type="submit">
+                                        رزرو
+                                    </button>
+                                </form>
                                 <br><br>
                                     <form action="{% url 'detail' place.pk %}" method="post">
                                         {% csrf_token %}

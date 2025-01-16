@@ -11388,3 +11388,73 @@ section#contact form#contactForm :-ms-input-placeholder {
   font-size: 20px;
 }
 
+
+
+
+#h1-id, #h2-id {
+  color: #212529; /* Dark color for headings */
+}
+
+#a-id {
+  text-decoration: none;
+  color: #ffc800; /* Bright color for links */
+}
+
+#a-id:hover {
+  color: #ffb700; /* Slightly darker shade on hover */
+}
+
+#status-id {
+  background-color: #ffffff; /* White background for status section */
+  border: 1px solid #e0e0e0; /* Light border for separation */
+  padding: 20px;
+  border-radius: 5px;
+  margin: 20px;
+}
+
+#body-id {
+  background-color: #ffffff; /* White background for cart items */
+  border: 1px solid #e0e0e0;
+  padding: 15px;
+  border-radius: 5px;
+  margin-bottom: 10px; /* Space between cart items */
+}
+
+#form-id {
+  margin-top: 10px; /* Space above forms */
+}
+
+#button-id{
+  background-color: #ffc800; /* Button background color */
+  color: #212529; /* Button text color */
+  border: none;
+  padding: 10px 15px;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+#button-id:hover {
+  background-color: #ffb700; /* Darker button on hover */
+}
+
+#input-id[type="text"], input[type="tel"] {
+  width: calc(100% - 20px); /* Full width minus padding */
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  margin-top: 5px; /* Space above inputs */
+}
+
+#input-id[type="text"]:focus, input[type="tel"]:focus {
+  border-color: #ffc800; /* Highlight border on focus */
+}
+
+#p-id {
+  font-size: 1.2em;
+  color: #212529; /* Dark text for instructions */
+}
+
+#a-checkout {
+  display: inline-block;
+  margin-top: 20px; /* Space above the back link */
+}

@@ -48,6 +48,12 @@
         </div>
     </nav>
     <br><br>
+    {% if messages %}
+            {% for message in messages %}
+                {{message}}
+            {% endfor %}
+    {% endif %} 
+    {% comment %} 2 problee {% endcomment %}
     <h1>ورود</h1>
     <br>
     {% if form.errors %}

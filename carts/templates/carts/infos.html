@@ -1,0 +1,26 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="{% static 'css/styles.css' %}">
+</head>
+<body>
+    <a href="{% url 'place-view' %}">Home page</a>
+    <div class="status">
+        <h1>Status:</h1>
+        {% if status %}
+            <p>{{ status }}</p>
+        {% endif %}
+
+        {% if name %}
+            <h2>Your information:</h2>
+            <p>name: {{ name }}</p>
+            <p>phone: {{ phone }}</p>
+            <p>address: {{ address }}</p>
+        {% endif %}
+    </div>
+</body>
+</html>

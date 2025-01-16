@@ -16,10 +16,12 @@ from django.core.cache import cache
 from .models import User, UserProfile
 from .forms import UserRegisterForm, UserEditProfileForm
 
+from carts.models import UserInfo
 
-api = KavenegarAPI('6C77622F6A2F74544F453672546C365A633755463263644A73537970564A70303054756746493751396D553D')
-params = { 'sender' : '2000660110', 'receptor': '09902111473', 'message' :'.وب سرویس پیام کوتاه کاوه نگار' }
-response = api.sms_send(params)
+
+# api = KavenegarAPI('6C77622F6A2F74544F453672546C365A633755463263644A73537970564A70303054756746493751396D553D')
+# params = { 'sender' : '2000660110', 'receptor': '09902111473', 'message' :'.وب سرویس پیام کوتاه کاوه نگار' }
+# response = api.sms_send(params)
 
 
 # class UserRegisterView(View):
@@ -77,7 +79,7 @@ class UserRegisterView(View):
                 messages.error(request, "Username is taken")
                 return redirect("place-view")
             
-            verification_code = random.randint(10000, 99999)
+            # verification_code = random.randint(10000, 99999)
             # cache.set(phone_number)
 
             user_obj = form.save(commit=False)
@@ -142,3 +144,5 @@ class EditProfileView(UpdateView):
 
     def get_success_url(self):
         return reverse('profile')
+
+

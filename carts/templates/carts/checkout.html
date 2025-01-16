@@ -1,0 +1,31 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Infos</title>
+    <link rel="stylesheet" href="{% static 'css/styles.css' %}">
+</head>
+<body id="info">
+    <p class="p">Importieren Sie Ihre Informationen:</p>
+    
+    <form action="{% url 'infos' %}" method="post" id="form-checkout">
+        {% csrf_token %}
+        <div>
+            <label for="name">Name:</label>
+            <input type="text" id="name" name="name" placeholder="Ihr Name" required />
+        </div>
+        <div>
+            <label for="phone">Phone:</label>
+            <input type="tel" id="phone" name="phone" placeholder="Ihre Telefonnummer" required />
+        </div>
+        <div>
+            <label for="address">Address:</label>
+            <input type="text" id="address" name="address" placeholder="Ihre Adresse" required />
+        </div>
+        <button type="submit">Save</button>
+    </form>
+    <a href="{% url 'checkout' %}" class="a-checkout">Back</a>
+</body>
+</html>

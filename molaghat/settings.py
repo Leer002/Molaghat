@@ -34,7 +34,8 @@ INSTALLED_APPS = [
     'django.contrib.humanize',
     # My apps
     'places',
-    'users'
+    'users',
+    'carts'
 ]
 
 MIDDLEWARE = [
@@ -123,4 +124,4 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 # Authorization
 AUTH_USER_MODEL = 'users.User'
 
-CACHES = CACHES
+# CACHES = CACHES

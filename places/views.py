@@ -11,9 +11,8 @@ class PlaceListView(View):
         places = Place.objects.filter(is_enable=True, event_date=timezone.now())
         categories = Category.objects.all()
         files = File.objects.all()
-        # total_quantity
-        # pagination
-        return render(request, "places/base.html", {"places":places, "categories":categories, "files":files})
+        total_quantity = request.session.get('total_quantity', 0)
+        return render(request, "places/base.html", {"places":places, "categories":categories, "files":files, "total_quantity":total_quantity})
     
 class PlaceDetailView(View):
     def get(self, request, pk):
