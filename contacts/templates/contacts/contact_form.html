@@ -1,0 +1,51 @@
+{% load static %}
+
+<div class="container">
+    <div class="text-center">
+        <h2 class="section-heading text-uppercase">ارتباط با ما</h2>
+    </div>
+    <form action="{% url 'contact' %}" id="contactForm" data-sb-form-api-token="API_TOKEN" method="post">
+        {% csrf_token %}
+        <div class="row align-items-stretch mb-5">
+            <div class="col-md-6">
+                <div class="form-group">
+                    <!-- Name input-->
+                    <label for="name">{{form.full_name.label}}</label>
+                    <div id="name" data-sb-validations="required" class="form-control">{{form.full_name}}</div>
+                    <div class="invalid-feedback" data-sb-feedback="name:required">لطفاً گزینه های اجباری را تکمیل نمائید.</div>
+                </div>
+                <div class="form-group">
+                    <!-- Email address input-->
+                    <label for="name">{{form.email.label}}</label>
+                    <div id="email" data-sb-validations="required" class="form-control">{{form.email}}</div>
+                    <div class="invalid-feedback" data-sb-feedback="email:required">لطفاً گزینه های اجباری را تکمیل نمائید.</div>
+                    <div class="invalid-feedback" data-sb-feedback="email:email">ایمیل معتبر نیست.</div>
+                </div>
+                <div class="form-group mb-md-0">
+                    <!-- Phone number input-->
+                    <label for="name">{{form.phone_number.label}}</label>
+                    <div id="phone" data-sb-validations="required" class="form-control">{{form.phone_number}}</div>
+                    <div class="invalid-feedback" data-sb-feedback="phone:required">لطفاً گزینه های اجباری را تکمیل نمائید.</div>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="form-group form-group-textarea mb-md-0">
+                    <!-- Message input-->
+                    <label for="name">{{form.message.label}}</label>
+                    <div id="message" data-sb-validations="required" class="form-control">{{form.message}}</div>
+                    <div class="invalid-feedback" data-sb-feedback="message:required">لطفاً گزینه های اجباری را تکمیل نمائید.</div>
+                </div>
+            </div>
+        </div>
+        <div class="d-none" id="submitSuccessMessage">
+            <div class="text-center text-white mb-3">
+                <div class="fw-bolder">ارسال فرم با موفقیت انجام شد!</div>
+                برای فعال کردن این فرم، ثبت نام کنید
+                <br />
+                <a href="https://startbootstrap.com/solution/contact-forms">https://startbootstrap.com/solution/contact-forms</a>
+            </div>
+        </div>
+        <div class="d-none" id="submitErrorMessage"><div class="text-center text-danger mb-3">Error sending message!</div></div>
+        <div class="text-center"><button class="btn btn-primary btn-xl text-uppercase"  type="submit">ارسال</button></div>
+    </form>
+</div>
