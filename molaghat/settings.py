@@ -32,10 +32,12 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'django.contrib.humanize',
+    'widget_tweaks',
     # My apps
     'places',
     'users',
     'carts',
+    'subscriptions',
     'payments',
     'contacts'
 ]
@@ -126,4 +128,12 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 # Authorization
 AUTH_USER_MODEL = 'users.User'
 
-# CACHES = CACHES
+# E-Mail
+# EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
+
+EMAIL_HOST = 'smtp.gmail.com'
+EMAIL_USE_TLS = True
+EMAIL_PORT = 587
+EMAIL_HOST_USER = EMAIL_HOST_USER
+EMAIL_HOST_PASSWORD = EMAIL_HOST_PASSWORD

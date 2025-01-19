@@ -43,7 +43,7 @@
                 <li class="nav-item"><a class="nav-link" href="/#services">خدمات</a></li>
                 <li class="nav-item"><a class="nav-link" href="/#category">دسته بندی</a></li>
                 <li class="nav-item"><a class="nav-link" href="/#about">درباره ما</a></li>
-                <li class="nav-item"><a class="nav-link" href="/#contact">ارتباط با ما</a></li>
+                <li class="nav-item"><a class="nav-link" href="{% url 'contact' %}">ارتباط با ما</a></li>
             </ul>
         </div>
     </nav>
@@ -73,5 +73,6 @@
         <button type="submit">ورود</button>
     </form>
     <p><a href="{% url 'register' %}" style="color: #ffc800;">ثبت نام نکرده‌ام</a></p>
+    <p><a href="{% url 'password_reset' %}" style="color: #ffc800;">بازنشانی پسورد</a></p>
 </body>
 </html>

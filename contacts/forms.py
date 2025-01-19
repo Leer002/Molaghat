@@ -1,10 +1,16 @@
 from django import forms
 from django.utils.translation import gettext_lazy as _
 
+from django import forms
+from .models import ContactUs
 
-class ContactUsForm(forms.Form):
-    full_name = forms.CharField(label=_("نام کامل"), max_length=80)
-    email = forms.EmailField(label=_("ایمیل"))
-    phone_number = forms.IntegerField(label=_("شماره تلفن"))
-    message = forms.CharField(label=_("پیام"), widget=forms.Textarea())
-    
+class ContactUsForm(forms.ModelForm):
+    class Meta:
+        model = ContactUs
+        fields = ['full_name', 'email', 'phone_number', 'message']
+        labels = {
+            'full_name': _("نام کامل"),
+            'email': _("ایمیل"),
+            'phone_number': _("شماره تلفن"),
+            'message': _("پیام"),
+        }

@@ -3,8 +3,7 @@ from django.utils.translation import gettext_lazy as _
 
 class UsernameValidator(RegexValidator):
     regex = r'^[a-zA-Z][a-zA-Z0-9_.]+$'
-    message = _('Enter a valid username starting with a-z. '
-                'This value may contain only letters, numbers and underscore characters.'),
+    message = _('یک نام کاربری معتبر که با a-z شروع می شود وارد کنید. این مقدار ممکن است فقط شامل حروف، اعداد و کاراکترهای زیرخط باشد.'),
     code = 'invalid_username'
 
 class PhoneNumberValidator(RegexValidator):

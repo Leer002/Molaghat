@@ -1,0 +1,23 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Success</title>
+    <link rel="stylesheet" href="{% static 'css/styles.css' %}">
+</head>
+<body>
+    {% include "places/navbar.html" %}
+    <br><br><br><br>
+    <center>
+        {% for message in messages %}
+        <h2>{{message}}</h2>
+    {% endfor %}
+    <br><br>
+    <div>
+        <a href="{% url 'place-view' %}">برگشت به صفحه ی اصلی</a>
+    </div>
+    </center>
+</body>
+</html>

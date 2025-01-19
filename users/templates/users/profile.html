@@ -24,7 +24,7 @@
                 <li class="nav-item"><a class="nav-link" href="/#services">خدمات</a></li>
                 <li class="nav-item"><a class="nav-link" href="/#category">دسته بندی</a></li>
                 <li class="nav-item"><a class="nav-link" href="/#about">درباره ما</a></li>
-                <li class="nav-item"><a class="nav-link" href="/#contact">ارتباط با ما</a></li>
+                <li class="nav-item"><a class="nav-link" href="{% url 'contact' %}">ارتباط با ما</a></li>
             </ul>
         </div>
     </nav>
@@ -50,7 +50,22 @@
 
     <a href="{% url 'edit_profile' %}" style="color: #ffc800;">ویرایش پروفایل</a><br>
     <a href="{% url 'logout' %}" style="color: #ffc800;">خروج</a></b>
-    <a href="{% url 'shops' %}" style="color: #ffc800;">خرید ها</a></b>
+    {% comment %} <a href="{% url 'shops' %}" style="color: #ffc800;">خرید ها</a></b> {% endcomment %}
+    <p><a href="{% url 'change-password' %}" style="color: #ffc800;">تغییر پسورد</a></p>
+    <p><a href="{% url 'password_reset' %}" style="color: #ffc800;">بازنشانی پسورد</a></p>
+    <br>
+    <div>
+        <h2>خرید های انجام شده:</h2><br>
+        {% for subscription in subscriptions %}
+            {% if subscription.items.is_purchased %}
+                <p>{{ subscription.items.place.event }} - {{ subscription.items.place.place_name }}</p>
+                <p>تاریخ: {{ subscription.items.place.get_event_date_shamsi }}</p>
+                <p>تعداد: {{ subscription.items.quantity }}</p>
+            {% endif %}
+        {% empty %}
+            <p> هنوز خریدی انجام نشده.</p>
+        {% endfor %}
 
+    </div>
 </body>
 </html>

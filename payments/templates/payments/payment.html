@@ -1,0 +1,99 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Payment</title>
+    <link rel="stylesheet" href="{% static 'css/styles.css' %}">
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #212529; /* رنگ پس‌زمینه تاریک */
+            color: #ffffff; /* رنگ متن سفید برای کنتراست بهتر */
+            margin: 0;
+            padding: 20px;
+        }
+        
+        .container {
+            max-width: 600px;
+            margin: auto;
+            background-color: #ffffff; /* رنگ پس‌زمینه سفید برای محتوا */
+            border-radius: 5px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            padding: 20px;
+        }
+        
+        h1 {
+            text-align: center;
+            color: #ffc800; /* رنگ عنوان */
+        }
+        
+        .btn {
+            display: block;
+            width: 100%;
+            padding: 10px;
+            background-color: #ffc800; /* رنگ دکمه */
+            color: #212529; /* رنگ متن دکمه */
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            text-align: center;
+            font-weight: bold;
+        }
+        
+        .btn:hover {
+            background-color: #e6b800; /* تغییر رنگ دکمه هنگام هاور */
+        }
+        
+        .payment-info {
+            margin-bottom: 20px;
+        }
+        
+        .note {
+            font-size: 14px;
+            color: #888888; /* رنگ متن یادداشت */
+        }
+        
+    </style>
+</head>
+<body>
+    <div>
+        {% if messages %}
+            <div class="messages">
+                {% for message in messages %}
+                    <p>{{ message }}</p>
+                {% endfor %}
+            </div>
+        {% endif %}
+
+    </div>
+    <div class="container">
+        <h1>پرداخت از طریق {{gateway.title}}</h1>
+        <p>لطفاً اطلاعات زیر را بررسی کنید:</p>
+        
+        <div class="payment-info">
+            <h3>جزئیات پرداخت</h3>
+            <p><strong>توکن پرداخت:</strong> {{ token }}</p>
+            <p><strong>آدرس بازگشت:</strong> {{ callback_url }}</p>
+        </div>
+        
+        {% comment %} If there really was a payment gateway: {% endcomment %}
+        {% comment %} <form action="{{ callback_url }}" method="post" id="payment-form"> {% endcomment %}
+        <form method="post" id="payment-form">
+            {% csrf_token %}
+            <input type="hidden" name="token" value="{{ token }}">
+            {% comment %} <input type="hidden" name="status" value="{{ status }}"> {% endcomment %}
+            <input type="hidden" name="status" value="10">
+            <button type="submit" class="btn">تأیید و پرداخت</button>
+        </form>
+
+        <div class="note">
+            <p>لطفاً توجه داشته باشید که پس از تأیید پرداخت، به آدرس بازگشت هدایت خواهید شد.</p>
+        </div>
+    </div>
+</body>
+</html>
+
+
+

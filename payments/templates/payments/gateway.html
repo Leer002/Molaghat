@@ -1,0 +1,41 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gateway</title>
+    <link rel="stylesheet" href="{% static 'css/styles.css' %}">
+    <style>
+        img {
+            width:50px;
+            height:50px;
+            border-radius: 50%;
+        }
+    </style>
+</head>
+<body>
+    {% include "places/navbar.html" %}
+    <br><br><br><br><br>
+    <center>
+        <h2>روش پرداخت</h2>
+        <br>
+        <form  method="post">
+            {% csrf_token %}
+            {% for gateway in gateways %}
+                <img src="{{gateway.avatar.url}}" alt=""/>
+                <label for="{{gateway.title}}">درگاه {{gateway.title}}</label>
+                <input type="radio" value="{{gateway.title}}" name="dargah" id="{{gateway.title}}"/>
+                <br><br>
+            {% endfor %}
+            <br>
+            <div>
+                <h3>صورتحساب</h3>
+                <p>تعداد صندلی رزرو شده:{{total_quantity}}</p>
+                <p>مجموع:{{total_price}} تومان</p>
+            </div>
+                <button type="submit" class="btn btn-primary" data-bs-dismiss="modal">پرداخت</button>
+        </form>
+    </center>
+</body>
+</html>

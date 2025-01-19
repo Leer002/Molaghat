@@ -2,7 +2,7 @@ import random
 from kavenegar import *
 
 from django.shortcuts import render, redirect, get_object_or_404
-from django.urls import reverse
+from django.urls import reverse, reverse_lazy
 from django.views import View
 from django.contrib.auth import login, logout, authenticate
 from django.contrib import messages
@@ -10,13 +10,21 @@ from django.contrib.auth.forms import AuthenticationForm
 from django.contrib.auth.decorators import login_required
 from django.utils.decorators import method_decorator
 from django.views.generic import UpdateView
-from django.core.cache import cache
+from django.contrib.auth.views import (
+    PasswordChangeView,
+    PasswordResetCompleteView,
+    PasswordResetConfirmView,
+    PasswordResetDoneView,
+    PasswordResetView,
+)
 
 
 from .models import User, UserProfile
-from .forms import UserRegisterForm, UserEditProfileForm
+from .forms import UserRegisterForm, UserEditProfileForm, ChangePasswordForm
 
 from carts.models import UserInfo
+
+from subscriptions.models import Subscription
 
 
 # api = KavenegarAPI('6C77622F6A2F74544F453672546C365A633755463263644A73537970564A70303054756746493751396D553D')
@@ -127,7 +135,8 @@ class UserLogout(View):
 class ProfileView(View):
     def get(self, request):
         user_profile = get_object_or_404(UserProfile, user=request.user)
-        return render(request, 'users/profile.html', {'profile': user_profile})
+        subscriptions = Subscription.objects.filter(user=request.user)
+        return render(request, 'users/profile.html', {'profile': user_profile, 'subscriptions':subscriptions})
 
 @method_decorator(login_required, name='dispatch')
 class EditProfileView(UpdateView):
@@ -146,3 +155,24 @@ class EditProfileView(UpdateView):
         return reverse('profile')
 
 
+class ChangePasswordView(PasswordChangeView):
+    template_name = "users/change_password.html"
+    success_url = reverse_lazy("login")
+    form_class = ChangePasswordForm
+
+class PasswordReset(PasswordResetView):
+    template_name = "users/password_reset_form.html"
+    success_url = reverse_lazy("password_reset_done")
+
+class PasswordResetDone(PasswordResetDoneView):
+    template_name = "users/password_reset_done.html"
+    success_url = reverse_lazy("password_reset_confirm")
+
+
+class PasswordResetConfirm(PasswordResetConfirmView):
+    template_name = "users/password_reset_confirm.html"
+    success_url = reverse_lazy("password_reset_complete")
+
+
+class PasswordResetComplete(PasswordResetCompleteView):
+    template_name = "users/password_reset_complete.html"

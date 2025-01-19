@@ -49,12 +49,12 @@ class UserManager(BaseUserManager):
     
 
 class User(AbstractBaseUser, PermissionsMixin):
-    username = models.CharField(_("username"), unique=True, max_length=32, validators=[validate_username], help_text=_('Required. 30 characters or fewer starting with a letter. Letters, digits and underscore only.'), 
-                    error_messages={'unique':_("A user with that username already exists."),})
+    username = models.CharField(_("username"), unique=True, max_length=30, validators=[validate_username], help_text=_('30 کاراکتر یا کمتر که با یک حرف شروع می شود. فقط حروف، اعداد و خط زیر خط.'), 
+                    error_messages={'unique':_("کاربری با این نام کاربری از قبل وجود دارد."),})
     first_name = models.CharField(_("first name"), max_length=30, blank=True)
     last_name = models.CharField(_("last name"), max_length=30, blank=True)
     email = models.EmailField(_("email"), unique=True, blank=True, null=True)
-    phone_number = models.BigIntegerField(_("phone number"), null=True, blank=True, validators=[validate_phone_number], error_messages={'unique': _("A user with that phone number already exists.")})
+    phone_number = models.BigIntegerField(_("phone number"), null=True, blank=True, validators=[validate_phone_number], error_messages={'unique': _("کاربری با آن شماره تلفن از قبل وجود دارد.")}, help_text="با 98 شروع کن")
 
     is_staff = models.BooleanField(_("is staff"), default=False)
     is_active = models.BooleanField(_("is active"), default=True)

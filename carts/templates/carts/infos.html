@@ -8,19 +8,28 @@
     <link rel="stylesheet" href="{% static 'css/styles.css' %}">
 </head>
 <body>
-    <a href="{% url 'place-view' %}">Home page</a>
-    <div class="status">
-        <h1>Status:</h1>
-        {% if status %}
-            <p>{{ status }}</p>
-        {% endif %}
-
-        {% if name %}
-            <h2>Your information:</h2>
-            <p>name: {{ name }}</p>
-            <p>phone: {{ phone }}</p>
-            <p>address: {{ address }}</p>
-        {% endif %}
-    </div>
+    {% include "places/navbar.html" %}
+    <br><br><br><br>
+    <center>
+        <div class="status">
+            {% if status %}
+                <h1>وضعیت:</h1>
+                <p>{{ status }}</p>
+            {% endif %}
+    
+            {% if name %}
+                <h2>اطلاعات شما:</h2>
+                <p>نام و نام خانوادگی: {{ name }}</p>
+                <p>شماره تلفن: {{ phone }}</p>
+                <p>آدرس: {{ address }}</p>
+            {% endif %}
+    
+            {% for c in cart_items %}
+                <p>تعداد صندلی رزرو شده:{{total_quantity}}</p>
+                <p>مجموع:{{total_price}} تومان</p>
+            {% endfor %}
+        </div>
+        <a href="{% url 'gateway' %}">ادامه</a>
+    </center>
 </body>
 </html>

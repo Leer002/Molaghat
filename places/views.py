@@ -60,3 +60,4 @@ class CategoryView(View):
             "category_places": category_places,
             "filter_price": filter_price
         })
+
