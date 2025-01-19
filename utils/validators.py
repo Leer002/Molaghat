@@ -8,7 +8,7 @@ class UsernameValidator(RegexValidator):
 
 class PhoneNumberValidator(RegexValidator):
     regex = r'^98(9[0-3,9]\d{8}|[1-9]\d{9})$'
-    message = 'Phone number must be a VALID 12 digits like 98xxxxxxxxxx'
+    message = 'شماره تلفن باید 12 رقمی معتبر مانند 98xxxxxxxxxx باشد.'
     code = 'invalid_phone_number'
 
 validate_username = UsernameValidator()

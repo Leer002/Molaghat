@@ -4,8 +4,6 @@ from django.contrib import messages
 
 from .models import Subscription
 
-from carts.models import CartItems
-
 class SubscriptionView(View):
     def get(self, request):
         if not request.user.is_authenticated:

@@ -1,6 +1,3 @@
-import random
-from kavenegar import *
-
 from django.shortcuts import render, redirect, get_object_or_404
 from django.urls import reverse, reverse_lazy
 from django.views import View
@@ -18,57 +15,10 @@ from django.contrib.auth.views import (
     PasswordResetView,
 )
 
-
 from .models import User, UserProfile
 from .forms import UserRegisterForm, UserEditProfileForm, ChangePasswordForm
 
-from carts.models import UserInfo
-
 from subscriptions.models import Subscription
-
-
-# api = KavenegarAPI('6C77622F6A2F74544F453672546C365A633755463263644A73537970564A70303054756746493751396D553D')
-# params = { 'sender' : '2000660110', 'receptor': '09902111473', 'message' :'.وب سرویس پیام کوتاه کاوه نگار' }
-# response = api.sms_send(params)
-
-
-# class UserRegisterView(View):
-#     def get(self, request):
-#         form = UserRegisterForm()
-#         return render(request, "users/register.html", context={"form":form})
-#     def post(self, request):
-#         form = UserRegisterForm(request.POST)
-
-#         if form.is_valid():
-#             username = form.cleaned_data.get("username")
-#             password = form.cleaned_data.get("password1")
-#             phone_number = form.cleaned_data.get("phone_number")
-
-#             try:
-#                 api = KavenegarAPI("6C77622F6A2F74544F453672546C365A633755463263644A73537970564A70303054756746493751396D553D", timeout=20)
-#                 params = params
-#                 response = response
-#                 print(response)
-#             except APIException as e: 
-#                 print(e)
-#             except HTTPException as e: 
-#                 print(e)
-
-#             if User.objects.filter(username=username).exists():
-#                 messages.error(request, "Username is taken")
-#                 return redirect("place-view")
-            
-#             user_obj = form.save(commit=False)
-#             user_obj.set_password(password)
-#             user_obj.save()
-
-#             authenticate_user = authenticate(request, username=username, password=password)
-#             if authenticate_user is not None:
-#                 login(request, authenticate_user)
-#                 UserProfile.objects.create(user=user_obj)
-#                 return redirect("place-view")
-            
-#         return render(request, "users/register.html", context={"form":form})
 
 class UserRegisterView(View):
     def get(self, request):
@@ -87,9 +37,6 @@ class UserRegisterView(View):
                 messages.error(request, "Username is taken")
                 return redirect("place-view")
             
-            # verification_code = random.randint(10000, 99999)
-            # cache.set(phone_number)
-
             user_obj = form.save(commit=False)
             user_obj.set_password(password)
             user_obj.save()
@@ -115,7 +62,7 @@ class UserLoginView(View):
         user_obj = User.objects.filter(username=username).first()
         if not user_obj:
             messages.error(request, "نام کاربری پیدا نشد")
-            return redirect("login")  # بازگشت به صفحه ورود
+            return redirect("login")  
         
         user_obj = authenticate(username=username, password=password)
         if user_obj:
@@ -123,7 +70,7 @@ class UserLoginView(View):
             return redirect("place-view")
         
         messages.error(request, "رمز عبور اشتباه است")
-        return redirect("login")  # بازگشت به صفحه ورود
+        return redirect("login")  
 
 
 class UserLogout(View):

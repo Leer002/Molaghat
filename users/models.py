@@ -14,9 +14,9 @@ class UserManager(BaseUserManager):
 
     def create_user(self, username, password=None, email=None, phone_number=None, is_staff=False, is_superuser=False, **extra_fields):
         if not username:
-            raise ValueError("The Username field must be set.")
+            raise ValueError(".قسمت نام کاربری باید تنظیم شود")
         if not email:
-            raise ValueError("The Email field must be set.")
+            raise ValueError(".فیلد ایمیل باید تنظیم شود")
         
         email = self.normalize_email(email)
         user = self.model(

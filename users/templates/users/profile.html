@@ -50,7 +50,6 @@
 
     <a href="{% url 'edit_profile' %}" style="color: #ffc800;">ویرایش پروفایل</a><br>
     <a href="{% url 'logout' %}" style="color: #ffc800;">خروج</a></b>
-    {% comment %} <a href="{% url 'shops' %}" style="color: #ffc800;">خرید ها</a></b> {% endcomment %}
     <p><a href="{% url 'change-password' %}" style="color: #ffc800;">تغییر پسورد</a></p>
     <p><a href="{% url 'password_reset' %}" style="color: #ffc800;">بازنشانی پسورد</a></p>
     <br>
@@ -65,7 +64,6 @@
         {% empty %}
             <p> هنوز خریدی انجام نشده.</p>
         {% endfor %}
-
     </div>
 </body>
 </html>

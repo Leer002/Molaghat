@@ -5,8 +5,6 @@ from django.contrib.auth.forms import PasswordChangeForm
 
 from .models import User, UserProfile
 
-from utils.validators import validate_phone_number
-
 class UserRegisterForm(forms.ModelForm):
     username = forms.CharField(max_length=40)
     email = forms.EmailInput()
@@ -28,12 +26,10 @@ class UserRegisterForm(forms.ModelForm):
 class UserEditProfileForm(forms.ModelForm):
     class Meta:
         model = UserProfile
-        fields = ['nick_name', 'birthdate', 'avatar']  # فیلدهایی که می‌خواهید کاربر ویرایش کند
+        fields = ['nick_name', 'birthdate', 'avatar'] 
         widgets = {
-            'birthdate': forms.DateInput(attrs={'type': 'date'}),  # برای انتخاب تاریخ
+            'birthdate': forms.DateInput(attrs={'type': 'date'}),
         }
-
-
 
 class ChangePasswordForm(PasswordChangeForm):
     old_password = forms.CharField(
