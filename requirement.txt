@@ -1,0 +1,15 @@
+# Django
+Django==4.2
+django-widget-tweaks==1.5.0
+
+# Shamsi:
+jdatetime==5.1.0
+
+# Mysql
+mysqlclient==2.2.7
+
+# Photo
+pillow==11.1.0
+
+requests==2.32.3
+

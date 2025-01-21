@@ -7,14 +7,15 @@ from .models import User, UserProfile
 
 class UserRegisterForm(forms.ModelForm):
     username = forms.CharField(max_length=40)
-    email = forms.EmailInput()
+    email = forms.EmailField()
+    phone_number = forms.CharField(max_length=15)
     password1 = forms.CharField(max_length=30, widget=forms.PasswordInput)
     password2 = forms.CharField(max_length=30, widget=forms.PasswordInput)
 
     class Meta:
         model = User
         fields = ["username", "email", "password1", "password2", "phone_number"]
-    
+
     def clean(self):
         cleaned_data = super().clean()
         password1 = cleaned_data.get("password1")
@@ -23,6 +24,7 @@ class UserRegisterForm(forms.ModelForm):
         if password1 and password2 and password2 != password1:
             raise forms.ValidationError(".رمزهای عبور مطابقت ندارند")
 
+
 class UserEditProfileForm(forms.ModelForm):
     class Meta:
         model = UserProfile
@@ -30,6 +32,7 @@ class UserEditProfileForm(forms.ModelForm):
         widgets = {
             'birthdate': forms.DateInput(attrs={'type': 'date'}),
         }
+
 
 class ChangePasswordForm(PasswordChangeForm):
     old_password = forms.CharField(

@@ -1,5 +1,4 @@
 import jdatetime
-import random
 
 from django.db import models
 from django.contrib.auth.models import BaseUserManager, PermissionsMixin, AbstractBaseUser
@@ -44,7 +43,6 @@ class UserManager(BaseUserManager):
             is_superuser=True,
             **extra_fields
         )
-        UserProfile.objects.create(user=user)
         return user
     
 
@@ -54,7 +52,7 @@ class User(AbstractBaseUser, PermissionsMixin):
     first_name = models.CharField(_("first name"), max_length=30, blank=True)
     last_name = models.CharField(_("last name"), max_length=30, blank=True)
     email = models.EmailField(_("email"), unique=True, blank=True, null=True)
-    phone_number = models.BigIntegerField(_("phone number"), null=True, blank=True, validators=[validate_phone_number], error_messages={'unique': _("کاربری با آن شماره تلفن از قبل وجود دارد.")}, help_text="با 98 شروع کن")
+    phone_number = models.CharField(_("phone number"), max_length=12, null=True, blank=True, validators=[validate_phone_number], error_messages={'unique': _("کاربری با آن شماره تلفن از قبل وجود دارد.")})
 
     is_staff = models.BooleanField(_("is staff"), default=False)
     is_active = models.BooleanField(_("is active"), default=True)
