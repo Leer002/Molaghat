@@ -21,7 +21,6 @@ class Category(models.Model):
     def __str__(self):
         return self.title
     
-
 class Place(models.Model):
     place_name = models.CharField(_("place"), max_length=60)
     event = models.CharField(_("title"), max_length=100)
