@@ -18,6 +18,4 @@ class ContactUsFormView(View):
         else:
             messages.error(request, "لطفاً اطلاعات خود را بررسی کنید.")
         
-        new_contact = ContactUs.objects.create(full_name = form.cleaned_data.get("full_name"))
-        print(new_contact)
         return render(request, "contacts/contact_form.html", {"form": form})
