@@ -1,4 +1,5 @@
 {% load static %}
+{% load humanize %}
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -12,11 +13,25 @@
             height:50px;
             border-radius: 50%;
         }
+        .message {
+            border: 2px solid rgba(255, 0, 0, 0.7);
+            padding: 10px;
+            border-radius: 5px;
+            background-color: rgba(255, 0, 0, 0.1); 
+            color: #333; 
+            font-family: Arial, sans-serif;
+        }
     </style>
 </head>
 <body>
     {% include "places/navbar.html" %}
     <br><br><br><br><br>
+    <center>
+        {% for message in messages %}
+            <span class="message">{{message}}</span>
+        {% endfor %}
+    </center>
+    <br>
     <center>
         <h2>روش پرداخت</h2>
         <br>
@@ -31,8 +46,14 @@
             <br>
             <div>
                 <h3>صورتحساب</h3>
-                <p>تعداد صندلی رزرو شده:{{total_quantity}}</p>
-                <p>مجموع:{{total_price}} تومان</p>
+                {% for i in cart_items %}
+                    <p>{{i.place.place_name}}</p>
+                    <p>{{i.place.event}}</p>
+                    <p>تعداد صندلی رزرو شده:{{i.quantity}}</p>
+                    <p>قیمت:{{i.place.price}} تومان</p>
+                    <hr>
+                {% endfor %}
+                <p>مجموع:{{total_price|intcomma}} تومان</p>
             </div>
                 <button type="submit" class="btn btn-primary" data-bs-dismiss="modal">پرداخت</button>
         </form>

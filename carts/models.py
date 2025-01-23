@@ -8,7 +8,7 @@ class CartItems(models.Model):
     user = models.ForeignKey(User, verbose_name=_("user"), on_delete=models.CASCADE)
     place = models.ForeignKey(Place, verbose_name=_("place"), on_delete=models.CASCADE)
     quantity = models.PositiveIntegerField(_("quantity"), default=0)
-    is_purchased = models.BooleanField(_("is_purchased"), default=False)
+    is_purchased = models.BooleanField(_("is purchased"), default=False)
     date_added = models.DateTimeField(_("date added"), auto_now_add=True)
 
     class Meta:

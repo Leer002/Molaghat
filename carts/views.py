@@ -96,7 +96,7 @@ class InfosView(View):
             return redirect("login")
 
         user_info = UserInfo.objects.filter(user=request.user).first()
-        cart_items = CartItems.objects.filter(user=request.user)
+        cart_items = CartItems.objects.filter(user=request.user, is_purchased=False)
         total_quantity = cart_items.aggregate(Sum('quantity'))['quantity__sum'] or 0
         total_price = sum(item.quantity * item.place.price for item in cart_items)
         
