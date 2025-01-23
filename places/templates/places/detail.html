@@ -7,7 +7,17 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>{{category}}</title>
     <link rel="stylesheet" href="{% static 'css/styles.css' %}">
-    <script src="https://kit.fontawesome.com/9b12e553ef.js" crossorigin="anonymous"></script> 
+    <script src="https://kit.fontawesome.com/9b12e553ef.js" crossorigin="anonymous"></script>
+    <style>
+        .styled-paragraph {
+            border: 2px solid rgba(255, 0, 0, 0.7); /* حاشیه قرمز با شفافیت */
+            padding: 10px; /* فضای داخلی */
+            border-radius: 5px; /* گوشه‌های گرد */
+            background-color: rgba(255, 0, 0, 0.1); /* پس‌زمینه ملایم */
+            color: #333; /* رنگ متن */
+            font-family: Arial, sans-serif; /* فونت */
+        }
+    </style> 
 </head>
 <body>
     <nav class="navbar navbar-expand-lg navbar-dark fixed-top" id="mainNav">
@@ -31,49 +41,86 @@
                                 <center><h2 class="text-uppercase">!ملاقات‌های نزدیک</h2><center/>
                                 <!-- Project details-->
                                 <br>
-                                <img class="img-fluid d-block mx-auto" src="{{ place.image.url }}" width="200px" alt="..." />
-                                <b><span>{{ place.place_name }}</span></b>
-                                <div dir="rtl"><b>{{ place.event }}</b></div>
-                                <br>
-                                <ul class="list-inline">
-                                    <li>
-                                        <strong>قیمت:</strong>
-                                        {{ place.price|intcomma }} تومان   
-                                    </li>
-                                    <li>
-                                        <strong>تاریخ:</strong>
-                                        {{ place.get_event_date_shamsi }}
-                                    </li>
-                                    <li>
-                                        <strong>ساعت:</strong>
-                                        {{ place.event_time }}
-                                    </li>
-                                    <li>
-                                        <strong>آدرس:</strong>
-                                        {{ place.address }}
-                                    </li>
-                                    {% if file %}
-                                        <a href={{file.file.url}}>{{file.title}}</a>
-                                    {% endif %}
-                                </ul>
-                                <form action="{% url 'cart-add' place.pk %}" method="post">
-                                    {% csrf_token %}
-                                    <button class="btn btn-primary" data-bs-dismiss="modal" type="submit">
-                                        رزرو
-                                    </button>
-                                </form>
-                                <br><br>
-                                    <form action="{% url 'detail' place.pk %}" method="post">
+                                {% if place.is_enable == True %}
+                                    <img class="img-fluid d-block mx-auto" src="{{ place.image.url }}" width="200px" alt="..." />
+                                    <b><span>{{ place.place_name }}</span></b>
+                                    <div dir="rtl"><b>{{ place.event }}</b></div>
+                                    <br>
+                                    <ul class="list-inline">
+                                        <li>
+                                            <strong>قیمت:</strong>
+                                            {{ place.price|intcomma }} تومان   
+                                        </li>
+                                        <li>
+                                            <strong>تاریخ:</strong>
+                                            {{ place.get_event_date_shamsi }}
+                                        </li>
+                                        <li>
+                                            <strong>ساعت:</strong>
+                                            {{ place.event_time }}
+                                        </li>
+                                        <li>
+                                            <strong>آدرس:</strong>
+                                            {{ place.address }}
+                                        </li>
+                                        {% if file %}
+                                            <a href={{file.file.url}}>{{file.title}}</a>
+                                        {% endif %}
+                                    </ul>
+                                    <form action="{% url 'cart-add' place.pk %}" method="post">
                                         {% csrf_token %}
-                                        <button class="icon-button"><i class="fa-regular fa-thumbs-up" class="like-icon" style="color: #FFD43B;font-size:24px;"></i>{{like}}</button>
+                                        <button class="btn btn-primary" data-bs-dismiss="modal" type="submit">
+                                            رزرو
+                                        </button>
                                     </form>
                                     <br>
-                                    <span>اشتراک گذاری</span>
-                                    <a href="https://www.facebook.com/sharer/sharer.php?u={{ request.build_absolute_uri }} " target="_blank"><i class="fa-brands fa-facebook"></i></a>
-                                    <a href="https://api.whatsapp.com/send?text={{ event.title }} - {{ request.build_absolute_uri }}" target="_blank"><i class="fa fa-whatsapp" aria-hidden="true"></i></a>
-                                    <a href="https://t.me/share/url?url={{ request.build_absolute_uri }}&text={{ event.title }}" target="_blank"><i class="fa fa-telegram" aria-hidden="true"></i></a><br>
-                                <br>
-                                <hr>
+                                        <form action="{% url 'detail' place.pk %}" method="post">
+                                            {% csrf_token %}
+                                            <button class="icon-button"><i class="fa-regular fa-thumbs-up" class="like-icon" style="color: #FFD43B;font-size:24px;"></i>{{like}}</button>
+                                        </form>
+                                        <br>
+                                        <span>اشتراک گذاری</span>
+                                        <a href="https://www.facebook.com/sharer/sharer.php?u={{ request.build_absolute_uri }} " target="_blank"><i class="fa-brands fa-facebook"></i></a>
+                                        <a href="https://api.whatsapp.com/send?text={{ event.title }} - {{ request.build_absolute_uri }}" target="_blank"><i class="fa fa-whatsapp" aria-hidden="true"></i></a>
+                                        <a href="https://t.me/share/url?url={{ request.build_absolute_uri }}&text={{ event.title }}" target="_blank"><i class="fa fa-telegram" aria-hidden="true"></i></a><br>
+                                    <br>
+                                    <hr>
+                                {% else %}
+                                    <br>
+                                    <img class="img-fluid d-block mx-auto" src="{{ place.image.url }}" width="200px" alt="..." />
+                                    <b><span>{{ place.place_name }}</span></b>
+                                    <div dir="rtl"><b>{{ place.event }}</b></div>
+                                    <br>
+                                    <ul class="list-inline">
+                                        <li>
+                                            <strong>قیمت:</strong>
+                                            {{ place.price|intcomma }} تومان   
+                                        </li>
+                                        <li>
+                                            <strong>تاریخ:</strong>
+                                            {{ place.get_event_date_shamsi }}
+                                        </li>
+                                        <li>
+                                            <strong>ساعت:</strong>
+                                            {{ place.event_time }}
+                                        </li>
+                                        <li>
+                                            <strong>آدرس:</strong>
+                                            {{ place.address }}
+                                        </li>
+                                        {% if file %}
+                                            <a href={{file.file.url}}>{{file.title}}</a>
+                                        {% endif %}
+                                    </ul>
+                                    <span class="styled-paragraph">!در دسترس نیست</span>
+                                    <br><br>
+                                        <form action="{% url 'detail' place.pk %}" method="post">
+                                            {% csrf_token %}
+                                            <button class="icon-button"><i class="fa-regular fa-thumbs-up" class="like-icon" style="color: #FFD43B;font-size:24px;"></i>{{like}}</button>
+                                        </form>
+                                    <br>
+                                    <hr>
+                                {% endif %}
                             </div>
                         </div>
                     </div>
