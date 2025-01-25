@@ -56,7 +56,7 @@ class CheckOut(View):
         if not request.user.is_authenticated:
             messages.error(request, "شما باید ابتدا وارد شوید.")
             return redirect("login")
-        cart_items = CartItems.objects.filter(user=request.user)
+        cart_items = CartItems.objects.filter(user=request.user, is_purchased=False)
 
         if not cart_items.exists(): 
             return redirect("cart-view")
@@ -86,7 +86,7 @@ class CheckOut(View):
         user_info.save()
 
 
-        messages.success(request, "تسویه حساب با موفقیت انجام شد.")
+        messages.success(request, ".با موفقیت انجام شد")
         return redirect("cart-view")
 
 class InfosView(View):
@@ -121,9 +121,8 @@ class InfosView(View):
 
         user_info, created = UserInfo.objects.get_or_create(user=request.user)
 
-        if phone:
+        if phone and address:
             user_info.phone_number = phone
-        if address:
             user_info.address = address
         
         user_info.save()
