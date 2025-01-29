@@ -35,7 +35,7 @@ class Place(models.Model):
     price = models.IntegerField(_("price"))
     capacity = models.PositiveIntegerField(_("capacity"))
     like = models.IntegerField(_("like"), default=0)
-    event_date = models.DateField(_("event date"), max_length=50)
+    event_date = models.DateField(_("event date"))
     event_time = models.CharField(_("event time"), max_length=5, blank=True, null=True)
     updated_time = models.DateTimeField(_("updated time"), auto_now=True)
 

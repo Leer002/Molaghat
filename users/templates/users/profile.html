@@ -56,11 +56,11 @@
     <div>
         <h2>خرید های انجام شده:</h2><br>
         {% for subscription in subscriptions %}
-            {% if subscription.items.is_purchased %}
-                <p>{{ subscription.items.place.event }} - {{ subscription.items.place.place_name }}</p>
-                <p>تاریخ: {{ subscription.items.place.get_event_date_shamsi }}</p>
+                <p>{{ subscription.items.event }} - {{ subscription.items.place_name }}</p>
+                <p>تاریخ: {{ subscription.items.get_event_date_shamsi }}</p>
                 <p>تعداد: {{ subscription.items.quantity }}</p>
-            {% endif %}
+                <p> قیمت: {{ subscription.items.price }}</p>
+                <hr/>
         {% empty %}
             <p> هنوز خریدی انجام نشده.</p>
         {% endfor %}

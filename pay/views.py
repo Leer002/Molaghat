@@ -8,7 +8,7 @@ from django.db.models import Sum
 
 from .models import Gateway, Payment
 
-from carts.models import CartItems
+from carts.models import CartItems, CartItemInfo
 
 from subscriptions.models import Subscription
 
@@ -17,29 +17,30 @@ class GatewayView(View):
         if not request.user.is_authenticated:
             messages.error(request, ".اول وارد حساب خود شوید")
         gateways = Gateway.objects.filter(is_enable=True)
-        cart_items = CartItems.objects.filter(user=request.user, is_purchased=False)
+        cart_items = CartItems.objects.filter(user=request.user)
         total_price = sum(item.quantity * item.place.price for item in cart_items)
         total_quantity = cart_items.aggregate(Sum('quantity'))['quantity__sum'] or 0
-        return render(request, "payments/gateway.html", {"gateways": gateways, "total_price": total_price, "total_quantity":total_quantity, 'cart_items':cart_items})
+        return render(request, "pay/gateway.html", {"gateways": gateways, "total_price": total_price, "total_quantity":total_quantity, 'cart_items':cart_items})
 
     def post(self, request):
         gateways = Gateway.objects.filter(is_enable=True)
-        cart_items = CartItems.objects.filter(user=request.user, is_purchased=False)
+        cart_items = CartItems.objects.filter(user=request.user)
         total_price = sum(item.quantity * item.place.price for item in cart_items)
         total_quantity = cart_items.aggregate(Sum('quantity'))['quantity__sum'] or 0
 
         dargah = request.POST.get('dargah')  
         if not dargah:
             messages.error(request, ".لطفاً یک درگاه پرداخت انتخاب کنید")
-            return render(request, "payments/gateway.html", {"gateways": gateways, "total_price":total_price, "total_quantity":total_quantity, "cart_items":cart_items})
+            return render(request, "pay/gateway.html", {"gateways": gateways, "total_price":total_price, "total_quantity":total_quantity, "cart_items":cart_items})
         
         return redirect("payment", dargah) 
 
 
 class PaymentView(View):
     def get(self, request, dargah):
-        cart_items = CartItems.objects.filter(user=request.user, is_purchased=False)
+        cart_items = CartItems.objects.filter(user=request.user)
         total_price = sum(item.quantity * item.place.price for item in cart_items)
+        cart_info = CartItemInfo.objects.filter(user=request.user)
         
         try:
             gateway = Gateway.objects.get(title=dargah, is_enable=True)
@@ -54,11 +55,11 @@ class PaymentView(View):
             phone_number=request.user.phone_number,
             token=str(uuid.uuid4())
         )
-        payment.items.set(cart_items)
+        payment.items.set(cart_info)
 
         callback_url = f"http://127.0.0.1:8000/pay/{gateway.title}/" 
 
-        return render(request, 'payments/payment.html', {
+        return render(request, 'pay/payment.html', {
             'token': payment.token,
             'callback_url': callback_url,
             'gateway': gateway
@@ -94,14 +95,16 @@ class PaymentView(View):
             payment.save()
 
             for item in payment.items.all():
-                Subscription.objects.create(
-                    user=payment.user,
-                    items=item)
+                if not Subscription.objects.filter(user=payment.user, items=item).exists():
+                    Subscription.objects.create(
+                        user=payment.user,
+                        items=item
+                    )
 
-            CartItems.objects.filter(user=request.user).update(is_purchased=True)
+            CartItems.objects.filter(user=request.user).delete()
 
             messages.success(request, ".با موفقیت انجام شد")
-            return render(request, "payments/success.html", {"status": payment.status})
+            return render(request, "pay/success.html", {"status": payment.status})
 
         else:
             payment.status = Payment.STATUS_CANCELED

@@ -9,7 +9,7 @@ urlpatterns = [
     path('user/', include("users.urls")),
     path('', include("carts.urls")),
     path('', include("subscriptions.urls")),
-    path('pay/', include("payments.urls")),
+    path('pay/', include("pay.urls")),
     path('', include("contacts.urls"))
 ]
 

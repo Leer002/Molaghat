@@ -4,7 +4,7 @@ from django.contrib import messages
 from django.db.models import Sum
 
 
-from .models import UserInfo, CartItems
+from .models import UserInfo, CartItems, CartItemInfo
 
 from places.models import Place
 
@@ -14,7 +14,7 @@ class CartItemView(View):
             messages.error(request, "شما باید ابتدا وارد شوید.")
             return redirect("login")
 
-        cart_items = CartItems.objects.filter(user=request.user, is_purchased=False)
+        cart_items = CartItems.objects.filter(user=request.user)
         total_quantity = cart_items.aggregate(Sum('quantity'))['quantity__sum'] or 0
         total_price = sum(item.quantity * item.place.price for item in cart_items)
 
@@ -56,7 +56,7 @@ class CheckOut(View):
         if not request.user.is_authenticated:
             messages.error(request, "شما باید ابتدا وارد شوید.")
             return redirect("login")
-        cart_items = CartItems.objects.filter(user=request.user, is_purchased=False)
+        cart_items = CartItems.objects.filter(user=request.user)
 
         if not cart_items.exists(): 
             return redirect("cart-view")
@@ -96,12 +96,12 @@ class InfosView(View):
             return redirect("login")
 
         user_info = UserInfo.objects.filter(user=request.user).first()
-        cart_items = CartItems.objects.filter(user=request.user, is_purchased=False)
+        cart_items = CartItems.objects.filter(user=request.user)
         total_quantity = cart_items.aggregate(Sum('quantity'))['quantity__sum'] or 0
         total_price = sum(item.quantity * item.place.price for item in cart_items)
         
         return render(request, 'carts/infos.html', {
-            'name': request.user.username,
+            'name': user_info.name if user_info else '',
             'phone': user_info.phone_number if user_info else '',
             'address': user_info.address if user_info else '',
             'cart_items':cart_items,
@@ -115,16 +115,30 @@ class InfosView(View):
             messages.error(request, "شما باید ابتدا وارد شوید.")
             return redirect("login")
         
-        
         phone = request.POST.get('phone')
         address = request.POST.get('address')
+        name = request.POST.get('name')
 
         user_info, created = UserInfo.objects.get_or_create(user=request.user)
+        cart_items = CartItems.objects.filter(user=request.user)
 
         if phone and address:
+            user_info.name = name
             user_info.phone_number = phone
             user_info.address = address
-        
-        user_info.save()
+            user_info.save()
+
+        for item in cart_items:
+            cart_item_info = CartItemInfo(
+                user=request.user,
+                quantity=item.quantity,
+                price=item.place.price,
+                place_name=item.place.place_name,
+                event=item.place.event,
+                event_date=item.place.event_date,
+                category=item.place.category.title,
+                city=item.place.city
+            )
+            cart_item_info.save()
         messages.success(request, "اطلاعات شما با موفقیت به‌روزرسانی شد.")
         return redirect("infos")

@@ -3,11 +3,11 @@ from django.utils.translation import gettext_lazy as _
 
 from users.models import User
 
-from carts.models import CartItems
+from carts.models import CartItemInfo
 
 class Subscription(models.Model):
     user = models.ForeignKey(User, verbose_name=_("user"), related_name="%(class)s" ,on_delete=models.CASCADE)
-    items = models.ForeignKey(CartItems, verbose_name=_("items"), on_delete=models.CASCADE, null=True)
+    items = models.ForeignKey(CartItemInfo, verbose_name=_("items"), on_delete=models.CASCADE, null=True)
     created_time = models.DateTimeField(_("created time"), auto_now_add=True)
 
     class Meta:

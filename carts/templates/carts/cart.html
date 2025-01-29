@@ -1,4 +1,5 @@
 {% load static %}
+{% load humanize %}
 <html lang="en">
 
 <head>
@@ -54,7 +55,8 @@
             {% for item in items_list %}
                 <div>
                     <p id="p-id">{{ item.place.place_name }} ({{ item.quantity }})</p>
-                    <p id="p-id">قیمت: {{ item.place.price }} تومان</p>
+                    <p id="p-id">{{ item.place.event }}</p>
+                    <p id="p-id">قیمت: {{ item.place.price|intcomma }} تومان</p>
                     <div class="button-container">
                         <form action="{% url 'cart-remove' item.place.id %}" method="post" class="button-form">
                             {% csrf_token %}
@@ -74,7 +76,7 @@
             </div>
             <br>
             <hr>
-            <p id="p-id">مبلغ: {{ total_price }}تومان</p>
+            <p id="p-id">مبلغ: {{ total_price|intcomma }}تومان</p>
             
             <a href="{% url 'place-view' %}" id="a-id"> ادامه ی خرید</a>
             <br>

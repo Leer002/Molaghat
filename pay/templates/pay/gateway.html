@@ -50,7 +50,7 @@
                     <p>{{i.place.place_name}}</p>
                     <p>{{i.place.event}}</p>
                     <p>تعداد صندلی رزرو شده:{{i.quantity}}</p>
-                    <p>قیمت:{{i.place.price}} تومان</p>
+                    <p dir="rtl">قیمت:{{i.place.price}} {{i.quantity}}x </p>
                     <hr>
                 {% endfor %}
                 <p>مجموع:{{total_price|intcomma}} تومان</p>

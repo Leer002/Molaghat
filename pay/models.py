@@ -3,7 +3,7 @@ from django.utils.translation import gettext_lazy as _
 
 from utils.validators import validate_phone_number
 
-from carts.models import CartItems
+from carts.models import CartItemInfo
 
 class Gateway(models.Model):
     title = models.CharField(_("title"), max_length=40)
@@ -33,7 +33,7 @@ class Payment(models.Model):
     )
     user = models.ForeignKey('users.User', verbose_name=_('user'), related_name='%(class)s', on_delete=models.CASCADE)
     gateway = models.ForeignKey(Gateway, verbose_name=_('gateway'), related_name='%(class)s', on_delete=models.CASCADE)
-    items = models.ManyToManyField(CartItems, verbose_name=_('items'), related_name='payments', blank=True)
+    items = models.ManyToManyField(CartItemInfo, verbose_name=_('items'), blank=True)
     price = models.PositiveIntegerField(_('price'), default=0)
     status = models.PositiveSmallIntegerField(_('status'), choices=STATUS_CHOICES, default=STATUS_VOID)
     device_uuid = models.CharField(_('device uuid'), max_length=40, blank=True)
