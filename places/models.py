@@ -50,14 +50,14 @@ class Place(models.Model):
     def clean(self):
         if self.capacity == 0:
             raise ValidationError('Value cannot be zero.')
+        
+        if self.event_date < timezone.now().date():
+            self.is_enable = False
+        else:
+            self.is_enable = True 
     
     def get_event_date_shamsi(self):
            return jdatetime.date.fromgregorian(date=self.event_date)
-    
-    def save(self, *args, **kwargs):
-        if self.event_date < timezone.now().date():
-            self.is_enable = False
-        super(Place, self).save(*args, **kwargs)
         
 class File(models.Model):
     place = models.ForeignKey("Place", verbose_name=_("place"), on_delete=models.CASCADE)
