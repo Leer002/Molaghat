@@ -49,7 +49,6 @@ class UserRegisterView(View):
 
         return render(request, "users/register.html", context={"form": form})
 
-
 class UserLoginView(View):
     def get(self, request):
         form = AuthenticationForm()
@@ -95,7 +94,7 @@ class EditProfileView(UpdateView):
         return get_object_or_404(UserProfile, user=self.request.user)
 
     def form_valid(self, form):
-        messages.success(self.request, "Your profile has been updated successfully!")
+        messages.success(self.request, "پروفایل شما با موفقیت به روز شد")
         return super().form_valid(form)
 
     def get_success_url(self):
