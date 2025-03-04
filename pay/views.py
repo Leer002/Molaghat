@@ -1,5 +1,5 @@
 import uuid
-# import requests
+import random
 
 from django.views import View
 from django.shortcuts import render, redirect
@@ -41,13 +41,14 @@ class PaymentView(View):
         cart_items = CartItems.objects.filter(user=request.user)
         total_price = sum(item.quantity * item.place.price for item in cart_items)
         cart_info = CartItemInfo.objects.filter(user=request.user)
+        st = random.choices([10,30], weights=[2,1], k=1)[0]
         
         try:
             gateway = Gateway.objects.get(title=dargah, is_enable=True)
         except Gateway.DoesNotExist:
             messages.error(request, "درگاه در دسترس نیست.")
             return redirect('infos')
-
+        
         payment = Payment.objects.create(
             user=request.user,
             gateway=gateway,
@@ -62,7 +63,8 @@ class PaymentView(View):
         return render(request, 'pay/payment.html', {
             'token': payment.token,
             'callback_url': callback_url,
-            'gateway': gateway
+            'gateway': gateway,
+            'status': st
         })
     def post(self, request, dargah):
         st = request.POST.get("status")
@@ -73,22 +75,6 @@ class PaymentView(View):
         except Payment.DoesNotExist:
             messages.error(request, ".پرداخت یافت نشد")
             return redirect('gateway')
-
-        # If there really was a payment gateway:
-        # if st != '10': 
-        #     payment.status = Payment.STATUS_CANCELED
-        #     payment.save()
-        #     messages.error(request, ".پرداخت توسط کاربر لغو شد")
-
-        # r = requests.post("bank_verify_url", data={"token": token})
-        # if r.status_code // 100 != 2:
-        #     payment.status = Payment.STATUS_ERROR
-        #     payment.save()
-        #     messages.error(request, ".پرداخت تایید نشد")
-
-        # payment.status = Payment.STATUS_PAID
-        # payment.save()
-        # -------------------------------------
 
         if st == '10':
             payment.status = Payment.STATUS_PAID
@@ -106,11 +92,9 @@ class PaymentView(View):
             messages.success(request, ".با موفقیت انجام شد")
             return render(request, "pay/success.html", {"status": payment.status})
 
-        else:
-            payment.status = Payment.STATUS_CANCELED
-            payment.save()
+        elif st == '30':
+            Payment.objects.filter(user=request.user).delete()
+            # CartItems.objects.filter(user=request.user).delete()
+            CartItemInfo.objects.filter(user=request.user).delete()
             messages.error(request, "پرداخت توسط کاربر لغو شد")
-            return redirect('place-view')  
-            
-
-    
+            return redirect('place-view')

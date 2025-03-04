@@ -32,7 +32,7 @@ class PlaceDetailView(View):
 class SearchView(View):
     def get(self, request):
         query = request.GET.get("query", "")
-        search_places = Place.objects.filter(place_name__icontains=query) if query else Place.objects.all()
+        search_places = Place.objects.filter(event__icontains=query) if query else Place.objects.all()
         
         return render(request, "places/search.html", {"search_places": search_places, "query": query})
 
@@ -58,4 +58,5 @@ class CategoryView(View):
             "category_places": category_places,
             "filter_price": filter_price
         })
+
 

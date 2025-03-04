@@ -76,16 +76,18 @@
             <h3>جزئیات پرداخت</h3>
             <p><strong>توکن پرداخت:</strong> {{ token }}</p>
             <p><strong>آدرس بازگشت:</strong> {{ callback_url }}</p>
+            <p>{{status}}</p>
         </div>
         
-        {% comment %} If there really was a payment gateway: {% endcomment %}
-        {% comment %} <form action="{{ callback_url }}" method="post" id="payment-form"> {% endcomment %}
         <form method="post" id="payment-form">
             {% csrf_token %}
             <input type="hidden" name="token" value="{{ token }}">
-            {% comment %} <input type="hidden" name="status" value="{{ status }}"> {% endcomment %}
-            <input type="hidden" name="status" value="10">
-            <button type="submit" class="btn">تأیید و پرداخت</button>
+            <input type="hidden" name="status" value="{{status}}">
+            {% if status is 10 %}
+                <button type="submit" class="btn">تأیید و پرداخت</button>
+            {% else %}
+                <button type="submit" class="btn">پرداخت انجام نشد</button>
+            {% endif %}
         </form>
 
         <div class="note">
